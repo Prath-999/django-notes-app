@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-notes
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: notes
+  template:
+    metadata:
+      labels:
+        app: notes
+    spec:
+      containers:
+        - name: notes-container
+          image: prath999/django-notes-app:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DB_NAME
+              value: notesdb
+            - name: DB_USER
+              value: root
+            - name: DB_PASSWORD
+              value: root
+            - name: DB_HOST
+              value: mysql-service
+            - name: DB_PORT
+              value: "3306"
